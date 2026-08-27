@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>DataSense Analytics</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for(
+            'static',
+            filename='css/style.css'
+        ) }}"
+    >
+
+</head>
+
+
+<body>
+
+
+<!-- ==========================================
+     NAVBAR
+========================================== -->
+
+<nav class="navbar">
+
+    <div class="logo">
+
+        📊 DataSense
+
+    </div>
+
+      <h1 class="my_name">
+            Mansoor Ahmed Kalwar
+        </h1>
+
+
+    <div class="nav-links">
+
+        <a
+            href="#home"
+            onclick="showPage('home')"
+        >
+            Home
+        </a>
+
+        <a
+            href="#analysis"
+            onclick="showPage('analysis')"
+        >
+            Analysis
+        </a>
+
+        <a
+            href="#dashboard"
+            onclick="showPage('dashboard')"
+        >
+            Dashboard
+        </a>
+
+    </div>
+
+</nav>
+
+
+<!-- ==========================================
+     HOME
+========================================== -->
+
+<section
+    id="home"
+    class="page active"
+>
+
+    <div class="hero">
+
+        <h1>
+            Turn Your Data Into
+            <span>Insights</span>
+        </h1>
+
+        <p style="color: rgb(127, 0, 0);">
+            Upload your CSV, Excel or JSON file
+            and automatically analyze your data.
+        </p>
+
+
+        <div class="upload-container">
+
+            <input
+                type="file"
+                id="fileInput"
+                accept=".csv,.xlsx,.xls,.json"
+            >
+
+            <label
+                for="fileInput"
+                class="file-label"
+            >
+
+                📁 Choose File
+
+            </label>
+
+
+            <p id="fileName">
+                No file selected
+            </p>
+
+
+            <button
+                onclick="analyzeFile()"
+                class="primary-btn"
+            >
+
+                Analyze Data
+
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <div class="features">
+
+        <div class="feature-card">
+
+            <h3>📈 Data Analysis</h3>
+
+            <p>
+                Automatically analyze your dataset
+                and discover important statistics.
+            </p>
+
+        </div>
+
+
+        <div class="feature-card">
+
+            <h3>📊 Visualization</h3>
+
+            <p>
+                Interactive charts and graphs
+                make your data easier to understand.
+            </p>
+
+        </div>
+
+
+        <div class="feature-card">
+
+            <h3>💡 Business Insights</h3>
+
+            <p>
+                Discover your best products,
+                profitable categories and trends.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ==========================================
+     ANALYSIS
+========================================== -->
+
+<section
+    id="analysis"
+    class="page"
+>
+
+    <div class="section-header">
+
+        <h2>Data Analysis</h2>
+
+        <p>
+            Detailed information about your dataset.
+        </p>
+
+    </div>
+
+
+    <div class="cards">
+
+        <div class="stat-card">
+
+            <h3>Rows</h3>
+
+            <strong id="rows">
+                -
+            </strong>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <h3>Columns</h3>
+
+            <strong id="columns">
+                -
+            </strong>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <h3>Missing Values</h3>
+
+            <strong id="missing">
+                -
+            </strong>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <h3>Duplicates</h3>
+
+            <strong id="duplicates">
+                -
+            </strong>
+
+        </div>
+
+    </div>
+
+
+    <div class="data-table-container">
+
+        <h3>Column Information</h3>
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>Column</th>
+                    <th>Data Type</th>
+                    <th>Missing</th>
+                    <th>Unique</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody id="columnTable">
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</section>
+
+
+<!-- ==========================================
+     DASHBOARD
+========================================== -->
+
+<section
+    id="dashboard"
+    class="page"
+>
+
+    <div class="section-header">
+
+        <h2>Store Dashboard</h2>
+
+        <p>
+            Business intelligence and sales performance.
+        </p>
+
+    </div>
+
+
+    <!-- STORE COLUMN SELECTION -->
+
+    <div class="column-selection">
+
+        <h3>Connect Your Dataset Columns</h3>
+
+        <p>
+            Select the columns that represent your store data.
+        </p>
+
+
+        <div class="select-grid">
+
+            <div>
+
+                <label>Sales</label>
+
+                <select id="salesColumn"></select>
+
+            </div>
+
+
+            <div>
+
+                <label>Profit</label>
+
+                <select id="profitColumn"></select>
+
+            </div>
+
+
+            <div>
+
+                <label>Quantity</label>
+
+                <select id="quantityColumn"></select>
+
+            </div>
+
+
+            <div>
+
+                <label>Product</label>
+
+                <select id="productColumn"></select>
+
+            </div>
+
+
+            <div>
+
+                <label>Category</label>
+
+                <select id="categoryColumn"></select>
+
+            </div>
+
+
+            <div>
+
+                <label>Date</label>
+
+                <select id="dateColumn"></select>
+
+            </div>
+
+
+            <div>
+
+                <label>Region</label>
+
+                <select id="regionColumn"></select>
+
+            </div>
+
+        </div>
+
+
+        <button
+            onclick="analyzeStore()"
+            class="primary-btn"
+        >
+
+            Generate Dashboard
+
+        </button>
+
+    </div>
+
+
+    <!-- KPI CARDS -->
+
+    <div class="cards">
+
+        <div class="stat-card">
+
+            <h3>💰 Total Sales</h3>
+
+            <strong id="totalSales">
+                -
+            </strong>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <h3>📈 Total Profit</h3>
+
+            <strong id="totalProfit">
+                -
+            </strong>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <h3>📦 Quantity Sold</h3>
+
+            <strong id="totalQuantity">
+                -
+            </strong>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <h3>🛒 Orders</h3>
+
+            <strong id="totalOrders">
+                -
+            </strong>
+
+        </div>
+
+    </div>
+
+
+    <!-- BUSINESS INSIGHTS -->
+
+    <div class="insights">
+
+        <div>
+
+            <h3>🏆 Best Selling Product</h3>
+
+            <p id="bestProduct">
+                -
+            </p>
+
+        </div>
+
+
+        <div>
+
+            <h3>💵 Most Profitable Product</h3>
+
+            <p id="profitableProduct">
+                -
+            </p>
+
+        </div>
+
+
+        <div>
+
+            <h3>📅 Most Profitable Day</h3>
+
+            <p id="profitableDay">
+                -
+            </p>
+
+        </div>
+
+
+        <div>
+
+            <h3>📊 Best Category</h3>
+
+            <p id="bestCategory">
+                -
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- CHARTS -->
+
+    <div class="chart-grid">
+
+
+        <div class="chart-card large">
+
+            <h3>
+                📈 Sales Over Time
+            </h3>
+
+            <canvas
+                id="salesChart"
+            ></canvas>
+
+        </div>
+
+
+        <div class="chart-card">
+
+            <h3>
+                🏆 Top Selling Products
+            </h3>
+
+            <canvas
+                id="productsChart"
+            ></canvas>
+
+        </div>
+
+
+        <div class="chart-card">
+
+            <h3>
+                💰 Profitable Products
+            </h3>
+
+            <canvas
+                id="profitChart"
+            ></canvas>
+
+        </div>
+
+
+        <div class="chart-card">
+
+            <h3>
+                📊 Sales by Category
+            </h3>
+
+            <canvas
+                id="categoryChart"
+            ></canvas>
+
+        </div>
+
+
+        <div class="chart-card">
+
+            <h3>
+                🌍 Sales by Region
+            </h3>
+
+            <canvas
+                id="regionChart"
+            ></canvas>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ==========================================
+     JAVASCRIPT
+========================================== -->
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script
+    src="{{ url_for(
+        'static',
+        filename='js/app.js'
+    ) }}"
+></script>
+
+
+</body>
+
+</html>
