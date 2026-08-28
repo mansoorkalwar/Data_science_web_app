@@ -15,10 +15,7 @@
 
     <link
         rel="stylesheet"
-        href="{{ url_for(
-            'static',
-            filename='css/style.css'
-        ) }}"
+        href="{{ url_for('static', filename='css/style.css') }}"
     >
 
 </head>
@@ -34,14 +31,13 @@
 <nav class="navbar">
 
     <div class="logo">
-
         📊 DataSense
-
     </div>
 
-      <h1 class="my_name">
-            Mansoor Ahmed Kalwar
-        </h1>
+
+    <h1 class="my_name">
+        Mansoor Ahmed Kalwar
+    </h1>
 
 
     <div class="nav-links">
@@ -53,12 +49,14 @@
             Home
         </a>
 
+
         <a
             href="#analysis"
             onclick="showPage('analysis')"
         >
             Analysis
         </a>
+
 
         <a
             href="#dashboard"
@@ -72,8 +70,9 @@
 </nav>
 
 
+
 <!-- ==========================================
-     HOME
+     HOME PAGE
 ========================================== -->
 
 <section
@@ -88,11 +87,16 @@
             <span>Insights</span>
         </h1>
 
-        <p style="color: rgb(127, 0, 0);">
-            Upload your CSV, Excel or JSON file
-            and automatically analyze your data.
+
+        <p>
+            Upload your CSV, Excel, or JSON file and automatically
+            transform your raw data into meaningful insights,
+            statistics, and interactive visualizations.
         </p>
 
+
+
+        <!-- FILE UPLOAD -->
 
         <div class="upload-container">
 
@@ -102,13 +106,12 @@
                 accept=".csv,.xlsx,.xls,.json"
             >
 
+
             <label
                 for="fileInput"
                 class="file-label"
             >
-
-                📁 Choose File
-
+                📁 Choose Dataset
             </label>
 
 
@@ -121,9 +124,7 @@
                 onclick="analyzeFile()"
                 class="primary-btn"
             >
-
-                Analyze Data
-
+                Analyze Data →
             </button>
 
         </div>
@@ -131,50 +132,72 @@
     </div>
 
 
+
+    <!-- FEATURES -->
+
     <div class="features">
 
+
+        <!-- FEATURE 1 -->
+
         <div class="feature-card">
 
-            <h3>📈 Data Analysis</h3>
+            <h3>
+                📈 Data Analysis
+            </h3>
 
             <p>
-                Automatically analyze your dataset
-                and discover important statistics.
+                Automatically analyze your dataset and discover
+                important statistics, missing values, duplicates,
+                and data patterns.
             </p>
 
         </div>
 
 
+
+        <!-- FEATURE 2 -->
+
         <div class="feature-card">
 
-            <h3>📊 Visualization</h3>
+            <h3>
+                📊 Visualization
+            </h3>
 
             <p>
-                Interactive charts and graphs
-                make your data easier to understand.
+                Transform your data into interactive charts and
+                visualizations that make complex information
+                easier to understand.
             </p>
 
         </div>
 
 
+
+        <!-- FEATURE 3 -->
+
         <div class="feature-card">
 
-            <h3>💡 Business Insights</h3>
+            <h3>
+                💡 Business Insights
+            </h3>
 
             <p>
-                Discover your best products,
-                profitable categories and trends.
+                Discover your best products, profitable categories,
+                sales trends, and important business opportunities.
             </p>
 
         </div>
+
 
     </div>
 
 </section>
 
 
+
 <!-- ==========================================
-     ANALYSIS
+     DATA ANALYSIS PAGE
 ========================================== -->
 
 <section
@@ -182,22 +205,33 @@
     class="page"
 >
 
+
+    <!-- HEADER -->
+
     <div class="section-header">
 
-        <h2>Data Analysis</h2>
+        <h2>
+            Data Analysis
+        </h2>
 
         <p>
-            Detailed information about your dataset.
+            Explore detailed information and statistics about your dataset.
         </p>
 
     </div>
 
 
+
+    <!-- STATISTICS CARDS -->
+
     <div class="cards">
+
 
         <div class="stat-card">
 
-            <h3>Rows</h3>
+            <h3>
+                Total Rows
+            </h3>
 
             <strong id="rows">
                 -
@@ -206,9 +240,12 @@
         </div>
 
 
+
         <div class="stat-card">
 
-            <h3>Columns</h3>
+            <h3>
+                Total Columns
+            </h3>
 
             <strong id="columns">
                 -
@@ -217,9 +254,12 @@
         </div>
 
 
+
         <div class="stat-card">
 
-            <h3>Missing Values</h3>
+            <h3>
+                Missing Values
+            </h3>
 
             <strong id="missing">
                 -
@@ -228,9 +268,12 @@
         </div>
 
 
+
         <div class="stat-card">
 
-            <h3>Duplicates</h3>
+            <h3>
+                Duplicate Rows
+            </h3>
 
             <strong id="duplicates">
                 -
@@ -238,12 +281,19 @@
 
         </div>
 
+
     </div>
 
 
+
+    <!-- COLUMN INFORMATION TABLE -->
+
     <div class="data-table-container">
 
-        <h3>Column Information</h3>
+        <h3>
+            Column Information
+        </h3>
+
 
         <table>
 
@@ -251,16 +301,30 @@
 
                 <tr>
 
-                    <th>Column</th>
-                    <th>Data Type</th>
-                    <th>Missing</th>
-                    <th>Unique</th>
+                    <th>
+                        Column
+                    </th>
+
+                    <th>
+                        Data Type
+                    </th>
+
+                    <th>
+                        Missing
+                    </th>
+
+                    <th>
+                        Unique
+                    </th>
 
                 </tr>
 
             </thead>
 
-            <tbody id="columnTable">
+
+            <tbody
+                id="columnTable"
+            >
 
             </tbody>
 
@@ -268,11 +332,13 @@
 
     </div>
 
+
 </section>
 
 
+
 <!-- ==========================================
-     DASHBOARD
+     DASHBOARD PAGE
 ========================================== -->
 
 <section
@@ -280,93 +346,171 @@
     class="page"
 >
 
+
+    <!-- HEADER -->
+
     <div class="section-header">
 
-        <h2>Store Dashboard</h2>
+        <h2>
+            Business Dashboard
+        </h2>
 
         <p>
-            Business intelligence and sales performance.
+            Analyze your business performance and discover
+            valuable insights from your data.
         </p>
 
     </div>
 
 
-    <!-- STORE COLUMN SELECTION -->
+
+    <!-- ==========================================
+         COLUMN SELECTION
+    ========================================== -->
 
     <div class="column-selection">
 
-        <h3>Connect Your Dataset Columns</h3>
+        <h3>
+            Connect Your Dataset
+        </h3>
 
         <p>
-            Select the columns that represent your store data.
+            Select the columns that represent the different
+            parts of your business data.
         </p>
+
 
 
         <div class="select-grid">
 
+
+            <!-- SALES -->
+
             <div>
 
-                <label>Sales</label>
+                <label>
+                    💰 Sales
+                </label>
 
-                <select id="salesColumn"></select>
+                <select
+                    id="salesColumn"
+                >
+
+                </select>
 
             </div>
 
 
+
+            <!-- PROFIT -->
+
             <div>
 
-                <label>Profit</label>
+                <label>
+                    📈 Profit
+                </label>
 
-                <select id="profitColumn"></select>
+                <select
+                    id="profitColumn"
+                >
+
+                </select>
 
             </div>
 
 
+
+            <!-- QUANTITY -->
+
             <div>
 
-                <label>Quantity</label>
+                <label>
+                    📦 Quantity
+                </label>
 
-                <select id="quantityColumn"></select>
+                <select
+                    id="quantityColumn"
+                >
+
+                </select>
 
             </div>
 
 
+
+            <!-- PRODUCT -->
+
             <div>
 
-                <label>Product</label>
+                <label>
+                    🛍 Product
+                </label>
 
-                <select id="productColumn"></select>
+                <select
+                    id="productColumn"
+                >
+
+                </select>
 
             </div>
 
 
+
+            <!-- CATEGORY -->
+
             <div>
 
-                <label>Category</label>
+                <label>
+                    🏷 Category
+                </label>
 
-                <select id="categoryColumn"></select>
+                <select
+                    id="categoryColumn"
+                >
+
+                </select>
 
             </div>
 
 
+
+            <!-- DATE -->
+
             <div>
 
-                <label>Date</label>
+                <label>
+                    📅 Date
+                </label>
 
-                <select id="dateColumn"></select>
+                <select
+                    id="dateColumn"
+                >
+
+                </select>
 
             </div>
 
 
+
+            <!-- REGION -->
+
             <div>
 
-                <label>Region</label>
+                <label>
+                    🌍 Region
+                </label>
 
-                <select id="regionColumn"></select>
+                <select
+                    id="regionColumn"
+                >
+
+                </select>
 
             </div>
+
 
         </div>
+
 
 
         <button
@@ -374,20 +518,29 @@
             class="primary-btn"
         >
 
-            Generate Dashboard
+            Generate Dashboard →
 
         </button>
+
 
     </div>
 
 
-    <!-- KPI CARDS -->
+
+    <!-- ==========================================
+         KPI CARDS
+    ========================================== -->
 
     <div class="cards">
 
+
+        <!-- TOTAL SALES -->
+
         <div class="stat-card">
 
-            <h3>💰 Total Sales</h3>
+            <h3>
+                💰 Total Sales
+            </h3>
 
             <strong id="totalSales">
                 -
@@ -396,9 +549,14 @@
         </div>
 
 
+
+        <!-- TOTAL PROFIT -->
+
         <div class="stat-card">
 
-            <h3>📈 Total Profit</h3>
+            <h3>
+                📈 Total Profit
+            </h3>
 
             <strong id="totalProfit">
                 -
@@ -407,9 +565,14 @@
         </div>
 
 
+
+        <!-- QUANTITY -->
+
         <div class="stat-card">
 
-            <h3>📦 Quantity Sold</h3>
+            <h3>
+                📦 Quantity Sold
+            </h3>
 
             <strong id="totalQuantity">
                 -
@@ -418,9 +581,14 @@
         </div>
 
 
+
+        <!-- ORDERS -->
+
         <div class="stat-card">
 
-            <h3>🛒 Orders</h3>
+            <h3>
+                🛒 Total Orders
+            </h3>
 
             <strong id="totalOrders">
                 -
@@ -428,16 +596,25 @@
 
         </div>
 
+
     </div>
 
 
-    <!-- BUSINESS INSIGHTS -->
+
+    <!-- ==========================================
+         BUSINESS INSIGHTS
+    ========================================== -->
 
     <div class="insights">
 
+
+        <!-- BEST PRODUCT -->
+
         <div>
 
-            <h3>🏆 Best Selling Product</h3>
+            <h3>
+                🏆 Best Selling Product
+            </h3>
 
             <p id="bestProduct">
                 -
@@ -446,9 +623,14 @@
         </div>
 
 
+
+        <!-- PROFITABLE PRODUCT -->
+
         <div>
 
-            <h3>💵 Most Profitable Product</h3>
+            <h3>
+                💵 Most Profitable Product
+            </h3>
 
             <p id="profitableProduct">
                 -
@@ -457,9 +639,14 @@
         </div>
 
 
+
+        <!-- PROFITABLE DAY -->
+
         <div>
 
-            <h3>📅 Most Profitable Day</h3>
+            <h3>
+                📅 Most Profitable Day
+            </h3>
 
             <p id="profitableDay">
                 -
@@ -468,9 +655,14 @@
         </div>
 
 
+
+        <!-- BEST CATEGORY -->
+
         <div>
 
-            <h3>📊 Best Category</h3>
+            <h3>
+                📊 Best Category
+            </h3>
 
             <p id="bestCategory">
                 -
@@ -478,13 +670,19 @@
 
         </div>
 
+
     </div>
 
 
-    <!-- CHARTS -->
+
+    <!-- ==========================================
+         CHARTS
+    ========================================== -->
 
     <div class="chart-grid">
 
+
+        <!-- SALES OVER TIME -->
 
         <div class="chart-card large">
 
@@ -499,6 +697,9 @@
         </div>
 
 
+
+        <!-- TOP PRODUCTS -->
+
         <div class="chart-card">
 
             <h3>
@@ -512,10 +713,13 @@
         </div>
 
 
+
+        <!-- PROFITABLE PRODUCTS -->
+
         <div class="chart-card">
 
             <h3>
-                💰 Profitable Products
+                💰 Most Profitable Products
             </h3>
 
             <canvas
@@ -524,6 +728,9 @@
 
         </div>
 
+
+
+        <!-- CATEGORY -->
 
         <div class="chart-card">
 
@@ -538,6 +745,9 @@
         </div>
 
 
+
+        <!-- REGION -->
+
         <div class="chart-card">
 
             <h3>
@@ -550,22 +760,28 @@
 
         </div>
 
+
     </div>
 
+
 </section>
+
 
 
 <!-- ==========================================
      JAVASCRIPT
 ========================================== -->
 
+
+<!-- CHART.JS -->
+
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
+
+<!-- APPLICATION JAVASCRIPT -->
+
 <script
-    src="{{ url_for(
-        'static',
-        filename='js/app.js'
-    ) }}"
+    src="{{ url_for('static', filename='js/app.js') }}"
 ></script>
 
 
