@@ -1,12 +1,5 @@
 let uploadedFile = null;
-
 let datasetColumns = [];
-
-let salesChart = null;
-let productsChart = null;
-let profitChart = null;
-let categoryChart = null;
-let regionChart = null;
 
 
 // ==========================================
@@ -15,22 +8,18 @@ let regionChart = null;
 
 document
     .getElementById("fileInput")
-    .addEventListener(
-        "change",
-        function () {
+    .addEventListener("change", function () {
 
-            uploadedFile =
-                this.files[0];
+        uploadedFile = this.files[0];
 
-            if (uploadedFile) {
+        if (uploadedFile) {
 
-                document
-                    .getElementById("fileName")
-                    .textContent =
-                    uploadedFile.name;
-            }
+            document
+                .getElementById("fileName")
+                .textContent =
+                `Selected: ${uploadedFile.name}`;
         }
-    );
+    });
 
 
 // ==========================================
@@ -39,23 +28,64 @@ document
 
 function showPage(pageName) {
 
-    const pages =
-        document.querySelectorAll(
-            ".page"
-        );
+    document
+        .querySelectorAll(".page")
+        .forEach(page => {
 
-    pages.forEach(
-        page => {
-            page.classList.remove(
-                "active"
-            );
-        }
-    );
+            page.classList.remove("active");
 
+        });
+
+
+    const targetPage =
+        document.getElementById(pageName);
+
+
+    if (targetPage) {
+
+        targetPage.classList.add("active");
+
+    }
+
+
+    // Update navbar active link
 
     document
-        .getElementById(pageName)
-        .classList.add("active");
+        .querySelectorAll(".nav-link")
+        .forEach(link => {
+
+            link.classList.toggle(
+                "active-nav",
+                link.dataset.page === pageName
+            );
+
+        });
+
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+
+
+    // Resize Plotly charts when page becomes visible
+
+    setTimeout(() => {
+
+        document
+            .querySelectorAll(".plotly-chart")
+            .forEach(chart => {
+
+                if (chart.data) {
+
+                    Plotly.Plots.resize(chart);
+
+                }
+
+            });
+
+    }, 150);
+
 }
 
 
@@ -67,9 +97,7 @@ async function analyzeFile() {
 
     if (!uploadedFile) {
 
-        alert(
-            "Please select a file first."
-        );
+        alert("Please select a dataset first.");
 
         return;
     }
@@ -77,6 +105,7 @@ async function analyzeFile() {
 
     const formData =
         new FormData();
+
 
     formData.append(
         "file",
@@ -100,15 +129,18 @@ async function analyzeFile() {
             await response.json();
 
 
-        if (data.error) {
+        if (!response.ok || data.error) {
 
-            alert(data.error);
+            alert(
+                data.error ||
+                "Could not analyze the dataset."
+            );
 
             return;
         }
 
 
-        // Save columns
+        // Save dataset columns
 
         datasetColumns =
             data.column_info.map(
@@ -116,47 +148,49 @@ async function analyzeFile() {
             );
 
 
-        // Basic statistics
+        // ==================================
+        // BASIC STATISTICS
+        // ==================================
 
         document
             .getElementById("rows")
             .textContent =
-            data.rows;
+            formatNumber(data.rows);
 
 
         document
             .getElementById("columns")
             .textContent =
-            data.columns;
+            formatNumber(data.columns);
 
 
         document
             .getElementById("missing")
             .textContent =
-            data.missing;
+            formatNumber(data.missing);
 
 
         document
             .getElementById("duplicates")
             .textContent =
-            data.duplicates;
+            formatNumber(data.duplicates);
 
 
-        // Column table
+        // Create column information table
 
         createColumnTable(
             data.column_info
         );
 
 
-        // Populate column selectors
+        // Populate selectors
 
         populateSelectors(
             datasetColumns
         );
 
 
-        // Go to Analysis
+        // Open Analysis page
 
         showPage("analysis");
 
@@ -167,9 +201,11 @@ async function analyzeFile() {
         console.error(error);
 
         alert(
-            "Something went wrong."
+            "Something went wrong while analyzing your file."
         );
+
     }
+
 }
 
 
@@ -177,9 +213,7 @@ async function analyzeFile() {
 // COLUMN TABLE
 // ==========================================
 
-function createColumnTable(
-    columns
-) {
+function createColumnTable(columns) {
 
     const table =
         document.getElementById(
@@ -190,40 +224,39 @@ function createColumnTable(
     table.innerHTML = "";
 
 
-    columns.forEach(
-        column => {
+    columns.forEach(column => {
 
-            const row =
-                document.createElement(
-                    "tr"
-                );
+        const row =
+            document.createElement("tr");
 
 
-            row.innerHTML = `
+        row.innerHTML = `
 
-                <td>
-                    ${column.name}
-                </td>
+            <td>
+                <strong>
+                    ${escapeHtml(column.name)}
+                </strong>
+            </td>
 
-                <td>
-                    ${column.type}
-                </td>
+            <td>
+                ${escapeHtml(column.type)}
+            </td>
 
-                <td>
-                    ${column.missing}
-                </td>
+            <td>
+                ${formatNumber(column.missing)}
+            </td>
 
-                <td>
-                    ${column.unique}
-                </td>
+            <td>
+                ${formatNumber(column.unique)}
+            </td>
 
-            `;
+        `;
 
 
-            table.appendChild(row);
+        table.appendChild(row);
 
-        }
-    );
+    });
+
 }
 
 
@@ -231,9 +264,7 @@ function createColumnTable(
 // COLUMN SELECTORS
 // ==========================================
 
-function populateSelectors(
-    columns
-) {
+function populateSelectors(columns) {
 
     const selectors = [
 
@@ -248,47 +279,40 @@ function populateSelectors(
     ];
 
 
-    selectors.forEach(
-        selectorId => {
+    selectors.forEach(selectorId => {
 
-            const select =
-                document.getElementById(
-                    selectorId
+        const select =
+            document.getElementById(
+                selectorId
+            );
+
+
+        select.innerHTML = `
+            <option value="">
+                Not selected
+            </option>
+        `;
+
+
+        columns.forEach(column => {
+
+            const option =
+                document.createElement(
+                    "option"
                 );
 
 
-            select.innerHTML =
-                `<option value="">
-                    Not Selected
-                </option>`;
+            option.value = column;
+
+            option.textContent = column;
 
 
-            columns.forEach(
-                column => {
+            select.appendChild(option);
 
-                    const option =
-                        document.createElement(
-                            "option"
-                        );
+        });
 
+    });
 
-                    option.value =
-                        column;
-
-
-                    option.textContent =
-                        column;
-
-
-                    select.appendChild(
-                        option
-                    );
-
-                }
-            );
-
-        }
-    );
 }
 
 
@@ -303,6 +327,8 @@ async function analyzeStore() {
         alert(
             "Please upload a dataset first."
         );
+
+        showPage("home");
 
         return;
     }
@@ -320,57 +346,57 @@ async function analyzeStore() {
 
     formData.append(
         "sales_column",
-        document.getElementById(
-            "salesColumn"
-        ).value
+        document
+            .getElementById("salesColumn")
+            .value
     );
 
 
     formData.append(
         "profit_column",
-        document.getElementById(
-            "profitColumn"
-        ).value
+        document
+            .getElementById("profitColumn")
+            .value
     );
 
 
     formData.append(
         "quantity_column",
-        document.getElementById(
-            "quantityColumn"
-        ).value
+        document
+            .getElementById("quantityColumn")
+            .value
     );
 
 
     formData.append(
         "product_column",
-        document.getElementById(
-            "productColumn"
-        ).value
+        document
+            .getElementById("productColumn")
+            .value
     );
 
 
     formData.append(
         "category_column",
-        document.getElementById(
-            "categoryColumn"
-        ).value
+        document
+            .getElementById("categoryColumn")
+            .value
     );
 
 
     formData.append(
         "date_column",
-        document.getElementById(
-            "dateColumn"
-        ).value
+        document
+            .getElementById("dateColumn")
+            .value
     );
 
 
     formData.append(
         "region_column",
-        document.getElementById(
-            "regionColumn"
-        ).value
+        document
+            .getElementById("regionColumn")
+            .value
     );
 
 
@@ -390,9 +416,12 @@ async function analyzeStore() {
             await response.json();
 
 
-        if (data.error) {
+        if (!response.ok || data.error) {
 
-            alert(data.error);
+            alert(
+                data.error ||
+                "Could not generate the dashboard."
+            );
 
             return;
         }
@@ -405,33 +434,25 @@ async function analyzeStore() {
         document
             .getElementById("totalSales")
             .textContent =
-            formatNumber(
-                data.total_sales
-            );
+            formatNumber(data.total_sales);
 
 
         document
             .getElementById("totalProfit")
             .textContent =
-            formatNumber(
-                data.total_profit
-            );
+            formatNumber(data.total_profit);
 
 
         document
             .getElementById("totalQuantity")
             .textContent =
-            formatNumber(
-                data.total_quantity
-            );
+            formatNumber(data.total_quantity);
 
 
         document
             .getElementById("totalOrders")
             .textContent =
-            formatNumber(
-                data.total_orders
-            );
+            formatNumber(data.total_orders);
 
 
         // ==================================
@@ -459,7 +480,7 @@ async function analyzeStore() {
 
 
         // ==================================
-        // CHARTS
+        // PLOTLY CHARTS
         // ==================================
 
         createSalesChart(
@@ -498,472 +519,933 @@ async function analyzeStore() {
         console.error(error);
 
         alert(
-            "Could not generate dashboard."
+            "Could not generate the dashboard."
         );
+
     }
+
 }
 
 
 // ==========================================
-// FORMAT NUMBERS
+// HELPER FUNCTIONS
 // ==========================================
 
-function formatNumber(
-    number
-) {
+function formatNumber(number) {
 
-    return Number(number)
-        .toLocaleString(
-            undefined,
-            {
-                maximumFractionDigits: 2
-            }
-        );
+    const value =
+        Number(number);
+
+
+    if (!Number.isFinite(value)) {
+
+        return "0";
+
+    }
+
+
+    return value.toLocaleString(
+        undefined,
+        {
+            maximumFractionDigits: 2
+        }
+    );
+
 }
 
 
-// ==========================================
-// BEST PRODUCT
-// ==========================================
+function escapeHtml(value) {
 
-function showBestProduct(
-    products
-) {
+    const div =
+        document.createElement("div");
+
+
+    div.textContent =
+        String(value ?? "");
+
+
+    return div.innerHTML;
+
+}
+
+
+function firstKey(object) {
 
     const keys =
-        Object.keys(products);
+        Object.keys(object || {});
 
 
-    if (keys.length === 0) {
+    if (keys.length > 0) {
 
-        document
-            .getElementById(
-                "bestProduct"
-            )
-            .textContent =
-            "Not available";
+        return keys[0];
 
-        return;
     }
 
+
+    return null;
+
+}
+
+
+// ==========================================
+// INSIGHTS
+// ==========================================
+
+function showBestProduct(products) {
 
     const product =
-        keys[0];
+        firstKey(products);
 
 
     document
-        .getElementById(
-            "bestProduct"
-        )
+        .getElementById("bestProduct")
         .textContent =
-        product;
+        product || "Not available";
+
 }
 
 
-// ==========================================
-// PROFITABLE PRODUCT
-// ==========================================
-
-function showProfitableProduct(
-    products
-) {
-
-    const keys =
-        Object.keys(products);
-
-
-    if (keys.length === 0) {
-
-        document
-            .getElementById(
-                "profitableProduct"
-            )
-            .textContent =
-            "Not available";
-
-        return;
-    }
-
+function showProfitableProduct(products) {
 
     const product =
-        keys[0];
+        firstKey(products);
 
 
     document
-        .getElementById(
-            "profitableProduct"
-        )
+        .getElementById("profitableProduct")
         .textContent =
-        product;
+        product || "Not available";
+
+}
+
+
+function showProfitableDay(day) {
+
+    document
+        .getElementById("profitableDay")
+        .textContent =
+        day
+            ? `${day.date} (${formatNumber(day.profit)})`
+            : "Not available";
+
+}
+
+
+function showBestCategory(category) {
+
+    document
+        .getElementById("bestCategory")
+        .textContent =
+        category?.category ||
+        "Not available";
+
 }
 
 
 // ==========================================
-// PROFITABLE DAY
+// PLOTLY CONFIGURATION
 // ==========================================
 
-function showProfitableDay(
-    day
+const plotlyConfig = {
+
+    responsive: true,
+
+    displaylogo: false,
+
+    scrollZoom: true,
+
+    modeBarButtonsToRemove: [
+
+        "select2d",
+        "lasso2d",
+        "autoScale2d"
+
+    ]
+
+};
+
+
+// ==========================================
+// COMMON PLOTLY LAYOUT
+// ==========================================
+
+function getPlotLayout(title, extra = {}) {
+
+    return {
+
+        title: {
+
+            text: title,
+
+            font: {
+
+                family:
+                    "Plus Jakarta Sans, sans-serif",
+
+                size: 18,
+
+                color: "#172033"
+
+            },
+
+            x: 0.03,
+
+            xanchor: "left"
+
+        },
+
+
+        paper_bgcolor:
+            "rgba(0,0,0,0)",
+
+
+        plot_bgcolor:
+            "rgba(0,0,0,0)",
+
+
+        font: {
+
+            family:
+                "DM Sans, sans-serif",
+
+            color:
+                "#667085"
+
+        },
+
+
+        margin: {
+
+            l: 70,
+            r: 35,
+            t: 70,
+            b: 60
+
+        },
+
+
+        hoverlabel: {
+
+            bgcolor:
+                "#172033",
+
+            font: {
+
+                color:
+                    "#ffffff",
+
+                family:
+                    "DM Sans, sans-serif"
+
+            }
+
+        },
+
+
+        ...extra
+
+    };
+
+}
+
+
+// ==========================================
+// EMPTY CHART
+// ==========================================
+
+function renderEmptyChart(
+    elementId,
+    title,
+    message
 ) {
 
-    if (!day) {
+    Plotly.react(
 
-        document
-            .getElementById(
-                "profitableDay"
-            )
-            .textContent =
-            "Not available";
+        elementId,
+
+        [],
+
+        getPlotLayout(
+            title,
+            {
+
+                annotations: [{
+
+                    text: message,
+
+                    showarrow: false,
+
+                    font: {
+
+                        size: 15,
+
+                        color: "#98a2b3"
+
+                    },
+
+                    x: 0.5,
+
+                    y: 0.5
+
+                }],
+
+
+                xaxis: {
+
+                    visible: false
+
+                },
+
+
+                yaxis: {
+
+                    visible: false
+
+                }
+
+            }
+        ),
+
+        plotlyConfig
+
+    );
+
+}
+
+
+// ==========================================
+// SALES OVER TIME CHART
+// ==========================================
+
+function createSalesChart(salesData) {
+
+    const labels =
+        Object.keys(salesData || {});
+
+
+    const values =
+        Object.values(salesData || {});
+
+
+    if (!labels.length) {
+
+        renderEmptyChart(
+
+            "salesChart",
+
+            "Sales Over Time",
+
+            "Select both a Date and Sales column to view this chart."
+
+        );
 
         return;
     }
 
 
-    document
-        .getElementById(
-            "profitableDay"
-        )
-        .textContent =
-        `${day.date}
-        (${formatNumber(day.profit)})`;
+    const trace = {
+
+        x: labels,
+
+        y: values,
+
+        type: "scatter",
+
+        mode: "lines+markers",
+
+        name: "Sales",
+
+
+        line: {
+
+            color: "#315efb",
+
+            width: 3,
+
+            shape: "spline"
+
+        },
+
+
+        marker: {
+
+            color: "#315efb",
+
+            size: 7
+
+        },
+
+
+        fill: "tozeroy",
+
+        fillcolor:
+            "rgba(49,94,251,0.10)",
+
+
+        hovertemplate:
+
+            "<b>Date:</b> %{x}<br>" +
+
+            "<b>Sales:</b> %{y:,.2f}" +
+
+            "<extra></extra>"
+
+    };
+
+
+    const layout =
+
+        getPlotLayout(
+            "Sales Over Time",
+            {
+
+                hovermode:
+                    "x unified",
+
+
+                xaxis: {
+
+                    title:
+                        "Date",
+
+                    gridcolor:
+                        "rgba(148,163,184,0.12)",
+
+                    zeroline: false
+
+                },
+
+
+                yaxis: {
+
+                    title:
+                        "Sales",
+
+                    tickformat:
+                        ",",
+
+                    gridcolor:
+                        "rgba(148,163,184,0.15)",
+
+                    zeroline: false
+
+                },
+
+
+                showlegend: false
+
+            }
+        );
+
+
+    Plotly.react(
+
+        "salesChart",
+
+        [trace],
+
+        layout,
+
+        plotlyConfig
+
+    );
+
 }
 
 
 // ==========================================
-// BEST CATEGORY
+// TOP SELLING PRODUCTS CHART
 // ==========================================
 
-function showBestCategory(
-    category
-) {
+function createProductsChart(products) {
 
-    if (!category) {
+    const names =
+        Object.keys(products || {});
 
-        document
-            .getElementById(
-                "bestCategory"
-            )
-            .textContent =
-            "Not available";
+
+    const values =
+        Object.values(products || {});
+
+
+    if (!names.length) {
+
+        renderEmptyChart(
+
+            "productsChart",
+
+            "Top Selling Products",
+
+            "Select Product and Quantity columns to view this chart."
+
+        );
 
         return;
     }
 
 
-    document
-        .getElementById(
-            "bestCategory"
-        )
-        .textContent =
-        category.category;
+    const trace = {
+
+        x:
+            values.slice().reverse(),
+
+        y:
+            names.slice().reverse(),
+
+        type:
+            "bar",
+
+        orientation:
+            "h",
+
+
+        marker: {
+
+            color:
+                "#315efb"
+
+        },
+
+
+        hovertemplate:
+
+            "<b>%{y}</b><br>" +
+
+            "Quantity: %{x:,.0f}" +
+
+            "<extra></extra>"
+
+    };
+
+
+    const layout =
+
+        getPlotLayout(
+            "Top Selling Products",
+            {
+
+                margin: {
+
+                    l: 150,
+                    r: 30,
+                    t: 70,
+                    b: 55
+
+                },
+
+
+                xaxis: {
+
+                    title:
+                        "Quantity",
+
+                    gridcolor:
+                        "rgba(148,163,184,0.15)"
+
+                },
+
+
+                yaxis: {
+
+                    automargin: true
+
+                },
+
+
+                showlegend: false
+
+            }
+        );
+
+
+    Plotly.react(
+
+        "productsChart",
+
+        [trace],
+
+        layout,
+
+        plotlyConfig
+
+    );
+
 }
 
 
 // ==========================================
-// SALES CHART
+// MOST PROFITABLE PRODUCTS CHART
 // ==========================================
 
-function createSalesChart(
-    salesData
-) {
+function createProfitChart(products) {
 
-    const canvas =
-        document.getElementById(
-            "salesChart"
+    const names =
+        Object.keys(products || {});
+
+
+    const values =
+        Object.values(products || {});
+
+
+    if (!names.length) {
+
+        renderEmptyChart(
+
+            "profitChart",
+
+            "Most Profitable Products",
+
+            "Select Product and Profit columns to view this chart."
+
         );
 
-
-    if (salesChart) {
-
-        salesChart.destroy();
+        return;
     }
 
 
-    salesChart =
-        new Chart(
-            canvas,
+    const trace = {
+
+        x:
+            values.slice().reverse(),
+
+        y:
+            names.slice().reverse(),
+
+        type:
+            "bar",
+
+        orientation:
+            "h",
+
+
+        marker: {
+
+            color:
+                "#16a34a"
+
+        },
+
+
+        hovertemplate:
+
+            "<b>%{y}</b><br>" +
+
+            "Profit: %{x:,.2f}" +
+
+            "<extra></extra>"
+
+    };
+
+
+    const layout =
+
+        getPlotLayout(
+            "Most Profitable Products",
             {
 
-                type: "line",
+                margin: {
 
-                data: {
-
-                    labels:
-                        Object.keys(
-                            salesData
-                        ),
-
-                    datasets: [{
-
-                        label:
-                            "Sales",
-
-                        data:
-                            Object.values(
-                                salesData
-                            ),
-
-                        tension: 0.3,
-
-                        fill: true
-
-                    }]
+                    l: 150,
+                    r: 30,
+                    t: 70,
+                    b: 55
 
                 },
 
-                options: {
 
-                    responsive: true,
+                xaxis: {
 
-                    maintainAspectRatio: false
+                    title:
+                        "Profit",
+
+                    tickformat:
+                        ",",
+
+                    gridcolor:
+                        "rgba(148,163,184,0.15)"
+
+                },
+
+
+                yaxis: {
+
+                    automargin: true
+
+                },
+
+
+                showlegend: false
+
+            }
+        );
+
+
+    Plotly.react(
+
+        "profitChart",
+
+        [trace],
+
+        layout,
+
+        plotlyConfig
+
+    );
+
+}
+
+
+// ==========================================
+// SALES BY CATEGORY CHART
+// ==========================================
+
+function createCategoryChart(categories) {
+
+    const labels =
+        Object.keys(categories || {});
+
+
+    const values =
+        Object.values(categories || {});
+
+
+    if (!labels.length) {
+
+        renderEmptyChart(
+
+            "categoryChart",
+
+            "Sales by Category",
+
+            "Select Category and Sales columns to view this chart."
+
+        );
+
+        return;
+    }
+
+
+    const trace = {
+
+        labels: labels,
+
+        values: values,
+
+        type: "pie",
+
+        hole: 0.62,
+
+
+        textinfo:
+            "percent",
+
+
+        textposition:
+            "inside",
+
+
+        marker: {
+
+            colors: [
+
+                "#315efb",
+                "#7c3aed",
+                "#06b6d4",
+                "#16a34a",
+                "#f59e0b",
+                "#ec4899",
+                "#64748b"
+
+            ],
+
+
+            line: {
+
+                color:
+                    "#ffffff",
+
+                width: 3
+
+            }
+
+        },
+
+
+        hovertemplate:
+
+            "<b>%{label}</b><br>" +
+
+            "Sales: %{value:,.2f}<br>" +
+
+            "Share: %{percent}" +
+
+            "<extra></extra>"
+
+    };
+
+
+    const layout =
+
+        getPlotLayout(
+            "Sales by Category",
+            {
+
+                showlegend: true,
+
+
+                legend: {
+
+                    orientation:
+                        "h",
+
+                    y:
+                        -0.15
+
+                },
+
+
+                margin: {
+
+                    l: 25,
+                    r: 25,
+                    t: 70,
+                    b: 80
 
                 }
 
             }
         );
+
+
+    Plotly.react(
+
+        "categoryChart",
+
+        [trace],
+
+        layout,
+
+        plotlyConfig
+
+    );
+
 }
 
 
 // ==========================================
-// PRODUCTS CHART
+// SALES BY REGION CHART
 // ==========================================
 
-function createProductsChart(
-    products
-) {
+function createRegionChart(regions) {
 
-    const canvas =
-        document.getElementById(
-            "productsChart"
+    const labels =
+        Object.keys(regions || {});
+
+
+    const values =
+        Object.values(regions || {});
+
+
+    if (!labels.length) {
+
+        renderEmptyChart(
+
+            "regionChart",
+
+            "Sales by Region",
+
+            "Select Region and Sales columns to view this chart."
+
         );
 
-
-    if (productsChart) {
-
-        productsChart.destroy();
+        return;
     }
 
 
-    productsChart =
-        new Chart(
-            canvas,
+    const trace = {
+
+        x: labels,
+
+        y: values,
+
+        type: "bar",
+
+
+        marker: {
+
+            color:
+                "#7c3aed",
+
+
+            line: {
+
+                color:
+                    "#6d28d9",
+
+                width: 1
+
+            }
+
+        },
+
+
+        hovertemplate:
+
+            "<b>%{x}</b><br>" +
+
+            "Sales: %{y:,.2f}" +
+
+            "<extra></extra>"
+
+    };
+
+
+    const layout =
+
+        getPlotLayout(
+            "Sales by Region",
             {
 
-                type: "bar",
+                xaxis: {
 
-                data: {
+                    title:
+                        "Region",
 
-                    labels:
-                        Object.keys(
-                            products
-                        ),
-
-                    datasets: [{
-
-                        label:
-                            "Quantity",
-
-                        data:
-                            Object.values(
-                                products
-                            )
-
-                    }]
+                    gridcolor:
+                        "rgba(148,163,184,0.08)"
 
                 },
 
-                options: {
 
-                    indexAxis: "y",
+                yaxis: {
 
-                    responsive: true,
+                    title:
+                        "Sales",
 
-                    maintainAspectRatio: false
+                    tickformat:
+                        ",",
 
-                }
-
-            }
-        );
-}
-
-
-// ==========================================
-// PROFIT CHART
-// ==========================================
-
-function createProfitChart(
-    products
-) {
-
-    const canvas =
-        document.getElementById(
-            "profitChart"
-        );
-
-
-    if (profitChart) {
-
-        profitChart.destroy();
-    }
-
-
-    profitChart =
-        new Chart(
-            canvas,
-            {
-
-                type: "bar",
-
-                data: {
-
-                    labels:
-                        Object.keys(
-                            products
-                        ),
-
-                    datasets: [{
-
-                        label:
-                            "Profit",
-
-                        data:
-                            Object.values(
-                                products
-                            )
-
-                    }]
+                    gridcolor:
+                        "rgba(148,163,184,0.15)"
 
                 },
 
-                options: {
 
-                    indexAxis: "y",
-
-                    responsive: true,
-
-                    maintainAspectRatio: false
-
-                }
+                showlegend: false
 
             }
         );
-}
 
 
-// ==========================================
-// CATEGORY CHART
-// ==========================================
+    Plotly.react(
 
-function createCategoryChart(
-    categories
-) {
+        "regionChart",
 
-    const canvas =
-        document.getElementById(
-            "categoryChart"
-        );
+        [trace],
 
+        layout,
 
-    if (categoryChart) {
+        plotlyConfig
 
-        categoryChart.destroy();
-    }
+    );
 
-
-    categoryChart =
-        new Chart(
-            canvas,
-            {
-
-                type: "doughnut",
-
-                data: {
-
-                    labels:
-                        Object.keys(
-                            categories
-                        ),
-
-                    datasets: [{
-
-                        data:
-                            Object.values(
-                                categories
-                            )
-
-                    }]
-
-                },
-
-                options: {
-
-                    responsive: true,
-
-                    maintainAspectRatio: false
-
-                }
-
-            }
-        );
-}
-
-
-// ==========================================
-// REGION CHART
-// ==========================================
-
-function createRegionChart(
-    regions
-) {
-
-    const canvas =
-        document.getElementById(
-            "regionChart"
-        );
-
-
-    if (regionChart) {
-
-        regionChart.destroy();
-    }
-
-
-    regionChart =
-        new Chart(
-            canvas,
-            {
-
-                type: "bar",
-
-                data: {
-
-                    labels:
-                        Object.keys(
-                            regions
-                        ),
-
-                    datasets: [{
-
-                        label:
-                            "Sales",
-
-                        data:
-                            Object.values(
-                                regions
-                            )
-
-                    }]
-
-                },
-
-                options: {
-
-                    responsive: true,
-
-                    maintainAspectRatio: false
-
-                }
-
-            }
-        );
 }
