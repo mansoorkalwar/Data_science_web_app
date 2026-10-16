@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Rubik+Dirt&display=swap');
 :root {
     --bg: #f5f7fb;
     --surface: #ffffff;
@@ -30,13 +30,21 @@ html {
 }
 
 body {
-    font-family: "DM Sans", sans-serif;
-    color: var(--text);
-    background:
-        radial-gradient(circle at 8% 5%, rgba(49, 94, 251, .08), transparent 28rem),
-        radial-gradient(circle at 92% 20%, rgba(124, 58, 237, .06), transparent 25rem),
-        var(--bg);
+    margin: 0;
     min-height: 100vh;
+
+    background-color: #f5f3ed;
+
+    background-image: radial-gradient(
+        circle,
+        rgba(7, 5, 0, 0.22) 1px,
+        transparent 1px
+    );
+
+    background-size: 14px 14px;
+    
+
+    
 }
 
 button,
@@ -124,7 +132,6 @@ button {
     display: block;
     animation: pageIn .4s ease;
 }
-
 @keyframes pageIn {
     from { opacity: 0; transform: translateY(8px); }
     to { opacity: 1; transform: translateY(0); }
@@ -167,36 +174,68 @@ button {
 }
 
 .hero h1 {
-    font-family: "Plus Jakarta Sans", sans-serif;
+    font-family: "Special Elite", cursive;
+
+    color: #263242;
+
     font-size: clamp(42px, 6vw, 76px);
-    line-height: 1.05;
-    letter-spacing: -2.8px;
+
+    font-weight: 450;
+
+    line-height: 1.1;
+
+    letter-spacing: -1px;
+
     margin: 22px 0 20px;
+
+    text-align: center;
 }
 
 .hero h1 span {
-    background: linear-gradient(135deg, var(--primary), var(--purple));
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
+    color: #287052;
+
+    background: none;
+
+    -webkit-background-clip: initial;
+    background-clip: initial;
+
+    position: relative;
+
+    display: inline-block;
 }
 
+/* Description below heading */
 .hero > p {
     max-width: 690px;
+
     margin: 0 auto;
+
     color: var(--muted);
+
     font-size: 18px;
+
     line-height: 1.7;
+
+    text-align: center;
 }
 
 .upload-container {
     max-width: 610px;
     margin: 42px auto 30px;
     padding: 38px;
-    background: rgba(255,255,255,.92);
-    border: 1px solid var(--border);
-    border-radius: 24px;
+    background: #f8f7f2;
+    border: 2px solid #ddd8cd;
+    border-radius: 22px;
     box-shadow: var(--shadow-lg);
+    transition: all 0.20s ease;
+    cursor: pointer;
+}
+.upload-container:hover {
+    border: 3px solid #263242;
+
+    box-shadow: 0 8px 20px rgba(38, 50, 66, 0.15);
+
+    transform: translateY(-2px);
 }
 
 .upload-icon {
@@ -253,6 +292,7 @@ button {
 }
 
 .primary-btn,
+
 .secondary-btn {
     display: inline-flex;
     align-items: center;
@@ -267,13 +307,13 @@ button {
 
 .primary-btn {
     color: #fff;
-    background: linear-gradient(135deg, var(--primary), #4f46e5);
-    box-shadow: 0 9px 22px rgba(49,94,251,.25);
+    background-color: #1F2937;
+    box-shadow: 0 9px 22px rgba(3, 15, 58, 0.25);
 }
 
 .primary-btn:hover {
     transform: translateY(-2px);
-    box-shadow: 0 14px 28px rgba(49,94,251,.32);
+    background-color: #161e28;
 }
 
 .secondary-btn {
@@ -340,10 +380,22 @@ button {
 
 .feature-card {
     padding: 28px;
-    transition: .25s ease;
+
+    background: #f8f7f2;
+    border: 2px solid #ddd8cd;
+    border-radius: 22px;
+    box-shadow: var(--shadow-lg);
+    transition: all 0.15s ease;
+    cursor: pointer;
 }
 
-.feature-card:hover,
+.feature-card:hover {
+   border: 3px solid #263242;
+
+    box-shadow: 0 8px 20px rgba(38, 50, 66, 0.15);
+
+    transform: translateY(-2px);
+}
 .chart-card:hover {
     transform: translateY(-4px);
     box-shadow: var(--shadow);
