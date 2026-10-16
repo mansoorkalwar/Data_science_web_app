@@ -320,7 +320,17 @@
             <h3>Explore your data</h3>
         </div>
 
-        <div class="chart-grid">
+        <div class="report-download-row">
+        <div>
+            <h3>Take your analysis with you</h3>
+            <p>Download a PDF report with dataset quality, KPIs, product summaries, charts, and insights.</p>
+        </div>
+        <button id="downloadReportBtn" onclick="downloadPdfReport()" class="primary-btn">
+            <span>Download PDF Report ↓</span>
+        </button>
+    </div>
+
+    <div class="chart-grid">
             <div class="chart-card large">
                 <div id="salesChart" class="plotly-chart"></div>
             </div>

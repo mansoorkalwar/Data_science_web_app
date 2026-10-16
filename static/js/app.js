@@ -1449,3 +1449,69 @@ function createRegionChart(regions) {
     );
 
 }
+
+// ==========================================
+// PDF REPORT DOWNLOAD
+// ==========================================
+
+async function downloadPdfReport() {
+    if (!uploadedFile) {
+        alert("Please upload a dataset first.");
+        showPage("home");
+        return;
+    }
+
+    const button = document.getElementById("downloadReportBtn");
+    const originalText = button.innerHTML;
+    button.disabled = true;
+    button.textContent = "Generating PDF...";
+
+    const formData = new FormData();
+    formData.append("file", uploadedFile);
+
+    const columns = {
+        sales_column: "salesColumn",
+        profit_column: "profitColumn",
+        quantity_column: "quantityColumn",
+        product_column: "productColumn",
+        category_column: "categoryColumn",
+        date_column: "dateColumn",
+        region_column: "regionColumn"
+    };
+
+    Object.entries(columns).forEach(([field, id]) => {
+        formData.append(field, document.getElementById(id).value || "");
+    });
+
+    try {
+        const response = await fetch("/download-report", {
+            method: "POST",
+            body: formData
+        });
+
+        if (!response.ok) {
+            let message = "Could not generate the PDF report.";
+            try {
+                const errorData = await response.json();
+                message = errorData.error || message;
+            } catch (_) {}
+            throw new Error(message);
+        }
+
+        const blob = await response.blob();
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = "sales_data_analysis_report.pdf";
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        URL.revokeObjectURL(url);
+    } catch (error) {
+        console.error(error);
+        alert(error.message || "Something went wrong while generating the PDF.");
+    } finally {
+        button.disabled = false;
+        button.innerHTML = originalText;
+    }
+}
