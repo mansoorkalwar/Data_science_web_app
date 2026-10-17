@@ -88,16 +88,37 @@ button {
 }
 
 .brand-icon {
-    width: 38px;
-    height: 38px;
-    border: 1px solid rgba(255, 255, 255, .24);
+    width: 40px;
+    height: 40px;
+    flex: 0 0 40px;
+    border: 1px solid rgba(153, 246, 228, .55);
     border-radius: 12px;
     display: grid;
     place-items: center;
-    color: #082f49;
-    background: linear-gradient(135deg, #99f6e4, #67e8f9);
-    box-shadow: 0 5px 18px rgba(45, 212, 191, .22);
-    font-size: 21px;
+    color: #102a43;
+    background: linear-gradient(145deg, #ccfbf1 0%, #67e8f9 100%);
+    box-shadow: 0 4px 16px rgba(45, 212, 191, .18);
+}
+
+.brand-icon svg {
+    width: 25px;
+    height: 25px;
+    overflow: visible;
+}
+
+.brand-icon .logo-bars {
+    fill: #102a43;
+    stroke: #102a43;
+    stroke-width: .6;
+    stroke-linejoin: round;
+}
+
+.brand-icon .logo-trend {
+    fill: none;
+    stroke: #0f766e;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
 }
 
 .nav-links {
