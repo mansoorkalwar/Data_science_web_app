@@ -1059,3 +1059,60 @@ tbody tr:hover { background: #fafbff; }
         transition: none !important;
     }
 }
+
+
+/* Scroll-aware navbar bottom border and navigation dividers */
+.navbar-dots {
+    position: sticky;
+    top: 78px;
+    z-index: 1499;
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: none;
+}
+
+.nav-link + .nav-link::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 0;
+    height: 22px;
+    border-left: 1px solid rgba(112, 109, 102, .42);
+    transform: translateY(-50%);
+    z-index: 2;
+}
+
+@supports (animation-timeline: scroll(root)) {
+    @keyframes navbarDotsReveal {
+        0% {
+            opacity: 0;
+            transform: translateY(-4px);
+        }
+        100% {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .navbar-dots {
+        opacity: 0;
+        animation: navbarDotsReveal linear both;
+        animation-timeline: scroll(root);
+        animation-range: 0 140px;
+    }
+}
+
+@media (max-width: 800px) {
+    .navbar-dots {
+        top: 70px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .navbar-dots {
+        opacity: 1;
+        animation: none !important;
+        transform: none;
+    }
+}
