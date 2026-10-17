@@ -1068,7 +1068,7 @@ tbody tr:hover { background: #fafbff; }
     z-index: 1499;
     height: 10px;
     width: 100%;
-    background-color: #343434;
+    background-color: #6f6e6e;
     background-image: radial-gradient(circle, #fff 0 2.5px, transparent 3px);
     background-size: 15px 10px;
     background-position: 0 0;
