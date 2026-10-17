@@ -1061,23 +1061,21 @@ tbody tr:hover { background: #fafbff; }
 }
 
 
-/* Scroll-aware geometric navbar bottom edge inspired by SplitBillUp */
+/* Scroll-aware dotted navbar bottom edge matching the SplitBillUp reference */
 .navbar-dots {
     position: sticky;
     top: 78px;
     z-index: 1499;
-    height: 12px;
+    height: 14px;
     width: 100%;
-    /* Cream base with a repeating angular, saw-tooth edge instead of dots/dashes. */
-    background-color: var(--nav-cream);
-    background-image:
-        linear-gradient(135deg, var(--nav-border) 25%, transparent 25%),
-        linear-gradient(225deg, var(--nav-border) 25%, transparent 25%);
-    background-position: 0 0, 0 0;
-    background-size: 16px 12px;
+    background-color: var(--nav-border);
+    background-image: radial-gradient(circle, var(--nav-cream) 0 3px, transparent 3.5px);
+    background-size: 15px 14px;
+    background-position: 0 0;
     background-repeat: repeat-x;
-    border: 0;
-    box-shadow: none;
+    border-top: 1px solid #D8CDBD;
+    border-bottom: 1px solid rgba(112, 109, 102, .12);
+    box-shadow: 0 2px 3px rgba(32, 42, 57, .035);
     opacity: 0;
     clip-path: inset(0 100% 0 0);
     transform: translateY(-3px);
@@ -1133,11 +1131,10 @@ tbody tr:hover { background: #fafbff; }
 @media (max-width: 800px) {
     .navbar-dots {
         top: 70px;
-        height: 10px;
-        background-size: 14px 10px;
+        height: 12px;
+        background-size: 14px 12px;
     }
 }
-
 @media (prefers-reduced-motion: reduce) {
     .navbar-dots {
         opacity: 1;
