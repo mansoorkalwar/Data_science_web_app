@@ -1534,6 +1534,10 @@ async function downloadPdfReport() {
             ? Math.min(100, Math.max(0, (scrollTop / scrollableHeight) * 100))
             : 0;
         progress.style.width = percentage + "%";
+        document.body.classList.toggle(
+            "navbar-scrolled",
+            (window.scrollY || document.documentElement.scrollTop || 0) > 12
+        );
     }
 
     window.addEventListener("scroll", updateScrollProgress, { passive: true });
