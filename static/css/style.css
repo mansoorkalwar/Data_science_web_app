@@ -1069,7 +1069,7 @@ tbody tr:hover { background: #fafbff; }
     height: 10px;
     width: 100%;
     background-color: #343434;
-    background-image: radial-gradient(circle, #fff 0 2.5px, transparent 3px);
+    background-image: radial-gradient(circle, #fff 0 5px, transparent 5.5px);
     background-size: 15px 10px;
     background-position: 0 0;
     background-repeat: repeat-x;
@@ -1109,6 +1109,7 @@ tbody tr:hover { background: #fafbff; }
         top: 70px;
         height: 9px;
         background-size: 14px 9px;
+        background-image: radial-gradient(circle, #fff 0 4.5px, transparent 5px);
     }
 }
 
