@@ -32,6 +32,8 @@ html {
 body {
     margin: 0;
     min-height: 100vh;
+    font-family: "DM Sans", sans-serif;
+    color: var(--text);
 
     background-color: #f5f3ed;
 
@@ -58,15 +60,15 @@ button {
 }
 
 .navbar {
-    height: 76px;
+    min-height: 76px;
     padding: 0 clamp(20px, 6vw, 90px);
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 25px;
-    background: rgba(255,255,255,.88);
-    backdrop-filter: blur(16px);
-    border-bottom: 1px solid rgba(230,234,240,.9);
+    background: linear-gradient(110deg, #111827 0%, #172554 58%, #123047 100%);
+    border-bottom: 1px solid rgba(94, 234, 212, .45);
+    box-shadow: 0 8px 28px rgba(15, 23, 42, .18);
     position: sticky;
     top: 0;
     z-index: 1000;
@@ -75,51 +77,74 @@ button {
 .brand {
     display: flex;
     align-items: center;
-    gap: 10px;
-    color: var(--text);
+    gap: 11px;
+    color: #f8fafc;
     font-family: "Plus Jakarta Sans", sans-serif;
-    font-size: 20px;
+    font-size: 19px;
     font-weight: 800;
+    letter-spacing: -.45px;
     text-decoration: none;
+    white-space: nowrap;
 }
 
 .brand-icon {
-    width: 36px;
-    height: 36px;
-    border-radius: 11px;
+    width: 38px;
+    height: 38px;
+    border: 1px solid rgba(255, 255, 255, .24);
+    border-radius: 12px;
     display: grid;
     place-items: center;
-    color: #fff;
-    background: linear-gradient(135deg, var(--primary), var(--purple));
-    box-shadow: 0 8px 20px rgba(49,94,251,.25);
+    color: #082f49;
+    background: linear-gradient(135deg, #99f6e4, #67e8f9);
+    box-shadow: 0 5px 18px rgba(45, 212, 191, .22);
+    font-size: 21px;
 }
 
 .nav-links {
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 7px;
+    padding: 6px;
+    border: 1px solid rgba(255, 255, 255, .09);
+    border-radius: 14px;
+    background: rgba(255, 255, 255, .045);
 }
 
 .nav-link {
-    padding: 9px 15px;
-    border-radius: 9px;
+    padding: 10px 16px;
+    border: 1px solid transparent;
+    border-radius: 10px;
     text-decoration: none;
-    color: var(--muted);
+    color: #cbd5e1;
+    font-family: "DM Sans", sans-serif;
     font-weight: 600;
-    font-size: 14px;
-    transition: .2s ease;
+    font-size: 13.5px;
+    letter-spacing: .15px;
+    transition: color .2s ease, background .2s ease, transform .2s ease;
 }
 
-.nav-link:hover,
+.nav-link:hover {
+    color: #ffffff;
+    background: rgba(255, 255, 255, .09);
+    transform: translateY(-1px);
+}
+
 .nav-link.active-nav {
-    color: var(--primary);
-    background: #eef2ff;
+    color: #062c35;
+    background: linear-gradient(135deg, #99f6e4, #67e8f9);
+    box-shadow: 0 4px 14px rgba(45, 212, 191, .16);
 }
 
 .profile-name {
-    color: var(--muted);
-    font-size: 14px;
+    padding: 9px 13px;
+    border: 1px solid rgba(255, 255, 255, .13);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, .055);
+    color: #e2e8f0;
+    font-size: 12px;
     font-weight: 600;
+    letter-spacing: .15px;
+    white-space: nowrap;
 }
 
 .page {
