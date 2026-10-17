@@ -1,6 +1,5 @@
 import pandas as pd
 
-
 class StoreAnalyzer:
 
     def __init__(
