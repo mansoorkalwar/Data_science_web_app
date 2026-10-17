@@ -1515,3 +1515,53 @@ async function downloadPdfReport() {
         button.innerHTML = originalText;
     }
 }
+
+
+// ==========================================
+// NAVBAR SCROLL PROGRESS + MOBILE MENU
+// ==========================================
+(function initializeNavbarEffects() {
+    const progress = document.getElementById("scrollProgress");
+    const navbar = document.querySelector(".navbar");
+    const menuButton = document.querySelector(".mobile-menu-toggle");
+    const navLinks = document.querySelectorAll(".nav-link");
+
+    function updateScrollProgress() {
+        if (!progress) return;
+        const scrollableHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const scrollTop = window.scrollY || document.documentElement.scrollTop || 0;
+        const percentage = scrollableHeight > 0
+            ? Math.min(100, Math.max(0, (scrollTop / scrollableHeight) * 100))
+            : 0;
+        progress.style.width = percentage + "%";
+    }
+
+    window.addEventListener("scroll", updateScrollProgress, { passive: true });
+    window.addEventListener("resize", updateScrollProgress);
+    window.addEventListener("load", updateScrollProgress);
+    updateScrollProgress();
+
+    window.toggleMobileMenu = function toggleMobileMenu() {
+        if (!navbar || !menuButton) return;
+        const isOpen = navbar.classList.toggle("menu-open");
+        menuButton.setAttribute("aria-expanded", String(isOpen));
+        menuButton.setAttribute("aria-label", isOpen ? "Close navigation menu" : "Open navigation menu");
+    };
+
+    navLinks.forEach(link => {
+        link.addEventListener("click", () => {
+            if (!navbar || !menuButton) return;
+            navbar.classList.remove("menu-open");
+            menuButton.setAttribute("aria-expanded", "false");
+            menuButton.setAttribute("aria-label", "Open navigation menu");
+        });
+    });
+
+    window.addEventListener("resize", () => {
+        if (window.innerWidth > 800 && navbar && menuButton) {
+            navbar.classList.remove("menu-open");
+            menuButton.setAttribute("aria-expanded", "false");
+            menuButton.setAttribute("aria-label", "Open navigation menu");
+        }
+    });
+})();
