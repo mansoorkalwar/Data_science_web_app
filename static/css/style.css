@@ -435,11 +435,23 @@ button {
     cursor: pointer;
 }
 
-.feature-card:hover {
-   border: 3px solid #263242;
+.feature-card:nth-child(1):hover {
+    border: 3px solid #28a745;
+    box-shadow: 0 8px 20px rgba(40, 167, 69, 0.15);
+    transform: translateY(-2px);
+}
 
-    box-shadow: 0 8px 20px rgba(38, 50, 66, 0.15);
+/* Interactive Charts — Orange */
+.feature-card:nth-child(2):hover {
+    border: 3px solid #ff8c09;
+    box-shadow: 0 8px 20px rgba(255, 140, 9, 0.15);
+    transform: translateY(-2px);
+}
 
+/* Business Insights — Black */
+.feature-card:nth-child(3):hover {
+    border: 3px solid #000000;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
     transform: translateY(-2px);
 }
 .chart-card:hover {
@@ -962,7 +974,7 @@ tbody tr:hover { background: #fafbff; }
     background-color: #E8E0D4;
     background-image: radial-gradient(circle, #B9AD9B 0 3px, transparent 3.5px);
     background-size: 15px 12px;
-    background-position: 0 0;
+    background-position: center -0.9px;
     border-top: 1px solid #D8CDBD;
     border-bottom: 1px solid #D8CDBD;
     box-shadow: inset 0 1px 0 rgba(255,255,255,.55);
@@ -1068,10 +1080,10 @@ tbody tr:hover { background: #fafbff; }
     z-index: 1499;
     height: 10px;
     width: 100%;
-    background-color: #6f6e6e;
-    background-image: radial-gradient(circle, #fff 0 2.5px, transparent 3px);
+    background-color: #999494;
+    background-image: radial-gradient(circle, #fff 0 3.5px, transparent 3.5px);
     background-size: 15px 10px;
-    background-position: 0 0;
+    background-position: center -0.8px;
     background-repeat: repeat-x;
     border-top: 1px solid rgba(52, 52, 52, .7);
     border-bottom: 1px solid rgba(52, 52, 52, .18);
@@ -1109,6 +1121,7 @@ tbody tr:hover { background: #fafbff; }
         top: 70px;
         height: 9px;
         background-size: 14px 9px;
+        background-image: radial-gradient(circle, #fff 0 4.5px, transparent 5px);
     }
 }
 
