@@ -1,30 +1,41 @@
-from flask import (
-    Flask,
-    render_template,
-    request,
-    jsonify,
-    send_file
-)
-from io import BytesIO
 from datetime import datetime
+from io import BytesIO
+from xml.sax.saxutils import escape
+
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
+from flask import Flask, jsonify, render_template, request, send_file
 from reportlab.lib import colors
+from reportlab.lib.enums import TA_CENTER, TA_LEFT, TA_RIGHT
 from reportlab.lib.pagesizes import A4
-from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
-from reportlab.lib.enums import TA_CENTER
+from reportlab.lib.styles import ParagraphStyle, getSampleStyleSheet
 from reportlab.lib.units import mm
-from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle, Image, PageBreak
+from reportlab.platypus import (
+    Image,
+    PageBreak,
+    Paragraph,
+    SimpleDocTemplate,
+    Spacer,
+    Table,
+    TableStyle,
+)
 
-from backend.data_loader import DataLoader
 from backend.data_analyzer import DataAnalyzer
+from backend.data_loader import DataLoader
 from backend.store_analyzer import StoreAnalyzer
 
-from xml.sax.saxutils import escape
-from reportlab.lib.enums import TA_CENTER, TA_LEFT, TA_RIGHT
-from reportlab.platypus import KeepTogether
 app = Flask(__name__)
+
+STORE_COLUMN_KEYS = (
+    "sales_column",
+    "profit_column",
+    "quantity_column",
+    "product_column",
+    "category_column",
+    "date_column",
+    "region_column",
+)
 
 
 # ==========================================
@@ -123,79 +134,10 @@ def store_analysis():
                 "error": "No file uploaded."
             }), 400
 
-        # Get selected columns
-
-        sales_column = request.form.get(
-            "sales_column"
-        )
-
-        profit_column = request.form.get(
-            "profit_column"
-        )
-
-        quantity_column = request.form.get(
-            "quantity_column"
-        )
-
-        product_column = request.form.get(
-            "product_column"
-        )
-
-        category_column = request.form.get(
-            "category_column"
-        )
-
-        date_column = request.form.get(
-            "date_column"
-        )
-
-        region_column = request.form.get(
-            "region_column"
-        )
-
-        # Convert empty values to None
-
-        sales_column = (
-            sales_column
-            if sales_column
-            else None
-        )
-
-        profit_column = (
-            profit_column
-            if profit_column
-            else None
-        )
-
-        quantity_column = (
-            quantity_column
-            if quantity_column
-            else None
-        )
-
-        product_column = (
-            product_column
-            if product_column
-            else None
-        )
-
-        category_column = (
-            category_column
-            if category_column
-            else None
-        )
-
-        date_column = (
-            date_column
-            if date_column
-            else None
-        )
-
-        region_column = (
-            region_column
-            if region_column
-            else None
-        )
+        selected_columns = {
+            key: request.form.get(key) or None
+            for key in STORE_COLUMN_KEYS
+        }
 
         # Load data
 
@@ -205,16 +147,7 @@ def store_analysis():
 
         # Create StoreAnalyzer object
 
-        store = StoreAnalyzer(
-            dataframe=df,
-            sales_column=sales_column,
-            profit_column=profit_column,
-            quantity_column=quantity_column,
-            product_column=product_column,
-            category_column=category_column,
-            date_column=date_column,
-            region_column=region_column
-        )
+        store = StoreAnalyzer(dataframe=df, **selected_columns)
 
         result = {
 
@@ -264,8 +197,6 @@ def store_analysis():
         }), 400
 
 
-
-
 # ==========================================
 # PDF REPORT GENERATOR
 # ==========================================
@@ -277,7 +208,6 @@ def download_report():
 
     # Professional color palette
     NAVY = colors.HexColor("#172B4D")
-    BLUE = colors.HexColor("#315EFB")
     TEAL = colors.HexColor("#0D9488")
     TEXT = colors.HexColor("#344054")
     MUTED = colors.HexColor("#667085")
@@ -290,14 +220,9 @@ def download_report():
         if not file:
             return jsonify({"error": "Please upload a dataset first."}), 400
 
-        column_keys = (
-            "sales_column", "profit_column", "quantity_column",
-            "product_column", "category_column", "date_column",
-            "region_column"
-        )
         selected = {
             key: request.form.get(key) or None
-            for key in column_keys
+            for key in STORE_COLUMN_KEYS
         }
 
         df = DataLoader(file).load_data()
@@ -627,7 +552,7 @@ def download_report():
             ax.set_facecolor("white")
 
             labels = [str(x)[:32] for x in values.index]
-            bars = ax.barh(
+            ax.barh(
                 labels,
                 values.values,
                 color=color,
