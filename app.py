@@ -37,20 +37,20 @@ STORE_COLUMN_KEYS = (
     "region_column",
 )
 
-
 # ==========================================
 # HOME PAGE
 # ==========================================
+
 
 @app.route("/")
 def home():
 
     return render_template("index.html")
 
-
 # ==========================================
 # GENERAL DATA ANALYSIS
 # ==========================================
+
 
 @app.route(
     "/upload",
@@ -113,10 +113,10 @@ def upload_file():
             "error": str(error)
         }), 400
 
-
 # ==========================================
 # STORE ANALYSIS
 # ==========================================
+
 
 @app.route(
     "/store-analysis",
@@ -196,10 +196,10 @@ def store_analysis():
             "error": str(error)
         }), 400
 
-
 # ==========================================
 # PDF REPORT GENERATOR
 # ==========================================
+
 
 @app.route("/download-report", methods=["POST"])
 def download_report():
