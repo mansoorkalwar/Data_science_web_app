@@ -1,0 +1,43 @@
+Primary green
+
+#087F5B
+
+Dark green
+
+#066B4D
+
+Light green
+
+#E8F5EF
+
+Main text
+
+#142033
+
+Secondary text
+
+#64748B
+
+Background
+
+#FCFCFA
+
+Card background
+
+#FFFFFF
+
+Border
+
+#E2E8E5
+
+Soft gray
+
+#F5F7F6
+
+Orange accent
+
+#F59E0B
+
+Purple accent
+
+#8B5CF6
