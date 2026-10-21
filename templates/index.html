@@ -8,8 +8,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/home-reference.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/home-original-overrides.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
 </head>
 <body>
 
@@ -39,7 +38,7 @@
 </nav>
 <div class="navbar-dots" aria-hidden="true"></div>
 
-<section id="home" class="page active home-reference-page">
+<section id="home" class="page active home-page">
     <div class="hero">
         <div class="hero-copy">
             <div class="hero-badge">
@@ -87,21 +86,21 @@
         </div>
     </div>
 
-    <div class="reference-bottom-stats" aria-label="Product highlights">
-        <div class="reference-stat">
-            <div class="reference-stat-icon file-stat-icon" aria-hidden="true"></div>
+    <div class="home-stats" aria-label="Product highlights">
+        <div class="home-stat">
+            <div class="home-stat-icon file-stat-icon" aria-hidden="true"></div>
             <div><strong>4+</strong><span>Supported Formats</span><small>CSV, XLSX, XLS, JSON</small></div>
         </div>
-        <div class="reference-stat">
-            <div class="reference-stat-icon chart-stat-icon" aria-hidden="true"></div>
+        <div class="home-stat">
+            <div class="home-stat-icon chart-stat-icon" aria-hidden="true"></div>
             <div><strong>10+</strong><span>Analysis Features</span><small>Explore, visualize, and get insights</small></div>
         </div>
-        <div class="reference-stat">
-            <div class="reference-stat-icon zap-stat-icon" aria-hidden="true">⚡</div>
+        <div class="home-stat">
+            <div class="home-stat-icon zap-stat-icon" aria-hidden="true">⚡</div>
             <div><strong>Instant</strong><span>Results</span><small>No waiting, just insights</small></div>
         </div>
-        <div class="reference-stat">
-            <div class="reference-stat-icon shield-stat-icon" aria-hidden="true"></div>
+        <div class="home-stat">
+            <div class="home-stat-icon shield-stat-icon" aria-hidden="true"></div>
             <div><strong>100%</strong><span>Data Privacy</span><small>Your data, your control</small></div>
         </div>
     </div>
@@ -210,6 +209,6 @@
 
 <script src="https://cdn.plot.ly/plotly-3.1.0.min.js"></script>
 <script src="{{ url_for('static', filename='js/app.js') }}"></script>
-<script src="{{ url_for('static', filename='js/home-reference.js') }}"></script>
+<script src="{{ url_for('static', filename='js/home.js') }}"></script>
 </body>
 </html>
