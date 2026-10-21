@@ -399,8 +399,8 @@ def download_report():
             leftMargin=margin,
             topMargin=19 * mm,
             bottomMargin=19 * mm,
-            title="DataSense Analytics | Business Report",
-            author="DataSense Analytics",
+            title="Yemdex Analytics | Business Report",
+            author="Yemdex Analytics",
             subject="Dataset analysis and business insights"
         )
 
