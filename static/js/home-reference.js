@@ -21,6 +21,39 @@ document.addEventListener("DOMContentLoaded", () => {
     document.querySelector(".chart-stat-icon").innerHTML = icons.chart;
     document.querySelector(".shield-stat-icon").innerHTML = icons.shield;
 
+    const heroStats = document.querySelector(".hero-stats");
+    heroStats.innerHTML = `
+        <div class="reference-capability">
+            <span class="capability-icon">⚡</span>
+            <span><strong>Fast Analysis</strong><small>Get insights in seconds</small></span>
+        </div>
+        <div class="reference-capability">
+            <span class="capability-icon">${icons.shield}</span>
+            <span><strong>Secure &amp; Private</strong><small>Your data stays yours</small></span>
+        </div>
+        <div class="reference-capability">
+            <span class="capability-icon">${icons.chart}</span>
+            <span><strong>Beautiful Visualizations</strong><small>Interactive &amp; professional</small></span>
+        </div>
+    `;
+
+    const style = document.createElement("style");
+    style.textContent = `
+        .home-reference-page .hero-stats { display:flex; justify-content:flex-start; align-items:stretch; margin-top:34px; }
+        .home-reference-page .reference-capability { display:flex; align-items:center; gap:10px; padding:0 23px; border-right:1px solid #D7DEDB; }
+        .home-reference-page .reference-capability:first-child { padding-left:0; }
+        .home-reference-page .reference-capability:last-child { border-right:0; }
+        .home-reference-page .capability-icon { width:24px; height:24px; display:grid; place-items:center; color:#087F5B; font-size:22px; }
+        .home-reference-page .capability-icon svg { width:22px; height:22px; display:block; }
+        .home-reference-page .reference-capability strong,
+        .home-reference-page .reference-capability small { display:block; }
+        .home-reference-page .reference-capability strong { color:#253247; font-size:11px; font-weight:600; line-height:1.2; white-space:nowrap; }
+        .home-reference-page .reference-capability small { margin-top:5px; color:#8A96A5; font-size:9px; line-height:1.2; white-space:nowrap; }
+        @media (max-width:900px) { .home-reference-page .hero-stats { justify-content:center; } }
+        @media (max-width:560px) { .home-reference-page .hero-stats { flex-direction:column; gap:14px; align-items:flex-start; } .home-reference-page .reference-capability { padding:0; border-right:0; } }
+    `;
+    document.head.appendChild(style);
+
     function setSelectedFile(file) {
         if (!file) return;
         uploadedFile = file;
