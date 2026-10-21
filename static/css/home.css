@@ -129,16 +129,16 @@
     margin: 0;
     padding: 25px 28px 28px;
     background: var(--home-white);
-    border: 1px solid #D9E1DE;
+    border: 1px solid #9fc1b4;
     border-radius: 13px;
     box-shadow: 0 13px 30px rgba(20,32,51,.055);
     text-align: center;
     cursor: default;
-    transition: border-color .2s ease, box-shadow .2s ease, transform .2s ease;
+    transition: border-color .15s ease, box-shadow .15s ease, transform .15s ease;
 }
 
 .home-page .upload-container:hover {
-    border: 1px solid #D9E1DE;
+    border: 1px solid #101211;
     box-shadow: 0 16px 34px rgba(20,32,51,.075);
     transform: translateY(-1px);
 }
@@ -148,7 +148,7 @@
     height: 49px;
     margin: 0 auto 12px;
     border-radius: 14px;
-    background: var(--home-green-soft);
+    background: rgb(197, 251, 188);
     color: var(--home-green);
     font-size: 0;
 }
@@ -181,7 +181,8 @@
     min-height: 190px;
     margin-top: 16px;
     padding: 18px 16px 15px;
-    border: 1px dashed #CDD6D2;
+    border: 1px dashed #72857f;
+    background-color: #e0f2f0;
     border-radius: 10px;
     display: flex;
     flex-direction: column;
@@ -250,7 +251,7 @@
     margin-top: 18px;
     border-radius: 10px;
     background: var(--home-green);
-    box-shadow: 0 7px 16px rgba(8,127,91,.17);
+    box-shadow: 0 7px 16px rgba(1, 43, 30, 0.621);
     color: #fff;
     font-size: 12px;
     font-weight: 600;
