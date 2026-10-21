@@ -4,8 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Yemdex Analytics | Smart Data Insights</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/home-reference.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/home-original-overrides.css') }}">
 </head>
 <body>
 
@@ -83,10 +87,24 @@
         </div>
     </div>
 
-    <div class="features" aria-hidden="true">
-        <div class="feature-card"><div class="feature-icon blue">⌁</div><h3>Data Quality</h3><p>Inspect your data.</p></div>
-        <div class="feature-card"><div class="feature-icon purple">◌</div><h3>Interactive Charts</h3><p>Explore visualizations.</p></div>
-        <div class="feature-card"><div class="feature-icon green">✦</div><h3>Business Insights</h3><p>Find opportunities.</p></div>
+    <div class="features">
+        <div class="feature-card">
+            <div class="feature-icon blue">⌁</div>
+            <h3>Data Quality</h3>
+            <p>Inspect rows, columns, missing values, duplicates, and dataset structure automatically.</p>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-icon purple">◌</div>
+            <h3>Interactive Charts</h3>
+            <p>Explore your data with professional Plotly charts featuring hover, zoom, pan, and export tools.</p>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-icon green">✦</div>
+            <h3>Business Insights</h3>
+            <p>Identify top products, profitable categories, sales trends, and important opportunities.</p>
+        </div>
     </div>
 
     <div class="reference-bottom-stats" aria-label="Product highlights">
