@@ -3,23 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Yemdex Analytics | Smart Data Insights</title>
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Rubik+Dirt&display=swap" rel="stylesheet">
-
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/home-reference.css') }}">
 </head>
-
 <body>
 
 <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
+
 <nav class="navbar" aria-label="Main navigation">
     <a href="#home" class="brand" onclick="showPage('home')">
         <span class="brand-icon" aria-hidden="true">
@@ -44,81 +35,79 @@
 </nav>
 <div class="navbar-dots" aria-hidden="true"></div>
 
-
-<section id="home" class="page active">
+<section id="home" class="page active home-reference-page">
     <div class="hero">
-        <div class="hero-badge">
-            <span class="badge-dot"></span>
-            AI-ready data analytics workspace
+        <div class="hero-copy">
+            <div class="hero-badge">
+                <span class="badge-dot"></span>
+                Data Analysis Made Simple
+            </div>
+
+            <h1 class="title">
+                Turn raw data into<br>
+                <span>clear decisions.</span>
+            </h1>
+
+            <p>
+                Upload your CSV, Excel, or JSON dataset and instantly explore<br class="desktop-break">
+                data quality, business metrics, and interactive visualizations.
+            </p>
+
+            <div class="hero-stats" aria-label="Key capabilities"></div>
         </div>
 
-        <h1 class="title">
-            Turn raw data into
-            <span>clear decisions.</span>
-        </h1>
+        <div class="upload-container" id="uploadDropzone">
+            <div class="upload-icon" aria-hidden="true"></div>
 
-        <p>
-            Upload your CSV, Excel, or JSON dataset and instantly explore
-            data quality, business metrics, and interactive visualizations.
-        </p>
-
-        <div class="upload-container">
-            <div class="upload-icon">📝</div>
-
-            <h3>Upload your dataset</h3>
-            <p>CSV, XLSX, XLS, or JSON</p>
+            <h3>Upload Your Dataset</h3>
+            <p class="upload-formats">CSV, XLSX, XLS, or JSON</p>
 
             <input type="file" id="fileInput" accept=".csv,.xlsx,.xls,.json">
 
-            <label for="fileInput" class="file-label">
-                <span>Browse files</span>
-            </label>
-
-            <p id="fileName">No file selected</p>
+            <div class="file-dropzone">
+                <div class="dropzone-icon" aria-hidden="true"></div>
+                <span class="dropzone-copy">Drag &amp; drop your file here</span>
+                <span class="dropzone-or">or</span>
+                <label for="fileInput" class="file-label">
+                    <span class="browse-icon" aria-hidden="true"></span>
+                    <span>Browse Files</span>
+                </label>
+                <p id="fileName">Maximum file size: 50MB</p>
+            </div>
 
             <button onclick="analyzeFile()" class="primary-btn">
-                Analyze Dataset
+                <span class="analyze-icon" aria-hidden="true"></span>
+                <span>Analyze Dataset</span>
                 <span>→</span>
             </button>
         </div>
-
-        <div class="hero-stats">
-            <div>
-                <strong>4</strong>
-                <span>File formats</span>
-            </div>
-            <div>
-                <strong>Interactive</strong>
-                <span>Plotly charts</span>
-            </div>
-            <div>
-                <strong>Instant</strong>
-                <span>Business insights</span>
-            </div>
-        </div>
     </div>
 
-    <div class="features">
-        <div class="feature-card">
-            <div class="feature-icon blue">⌁</div>
-            <h3>Data Quality</h3>
-            <p>Inspect rows, columns, missing values, duplicates, and dataset structure automatically.</p>
-        </div>
+    <div class="features" aria-hidden="true">
+        <div class="feature-card"><div class="feature-icon blue">⌁</div><h3>Data Quality</h3><p>Inspect your data.</p></div>
+        <div class="feature-card"><div class="feature-icon purple">◌</div><h3>Interactive Charts</h3><p>Explore visualizations.</p></div>
+        <div class="feature-card"><div class="feature-icon green">✦</div><h3>Business Insights</h3><p>Find opportunities.</p></div>
+    </div>
 
-        <div class="feature-card">
-            <div class="feature-icon purple">◌</div>
-            <h3>Interactive Charts</h3>
-            <p>Explore your data with professional Plotly charts featuring hover, zoom, pan, and export tools.</p>
+    <div class="reference-bottom-stats" aria-label="Product highlights">
+        <div class="reference-stat">
+            <div class="reference-stat-icon file-stat-icon" aria-hidden="true"></div>
+            <div><strong>4+</strong><span>Supported Formats</span><small>CSV, XLSX, XLS, JSON</small></div>
         </div>
-
-        <div class="feature-card">
-            <div class="feature-icon green">✦</div>
-            <h3>Business Insights</h3>
-            <p>Identify top products, profitable categories, sales trends, and important opportunities.</p>
+        <div class="reference-stat">
+            <div class="reference-stat-icon chart-stat-icon" aria-hidden="true"></div>
+            <div><strong>10+</strong><span>Analysis Features</span><small>Explore, visualize, and get insights</small></div>
+        </div>
+        <div class="reference-stat">
+            <div class="reference-stat-icon zap-stat-icon" aria-hidden="true">⚡</div>
+            <div><strong>Instant</strong><span>Results</span><small>No waiting, just insights</small></div>
+        </div>
+        <div class="reference-stat">
+            <div class="reference-stat-icon shield-stat-icon" aria-hidden="true"></div>
+            <div><strong>100%</strong><span>Data Privacy</span><small>Your data, your control</small></div>
         </div>
     </div>
 </section>
-
 
 <section id="analysis" class="page">
     <div class="page-heading">
@@ -131,241 +120,77 @@
     </div>
 
     <div class="cards">
-        <div class="stat-card">
-            <span class="stat-icon">▤</span>
-            <div>
-                <h3>Total Rows</h3>
-                <strong id="rows">-</strong>
-            </div>
-        </div>
-
-        <div class="stat-card">
-            <span class="stat-icon">▦</span>
-            <div>
-                <h3>Total Columns</h3>
-                <strong id="columns">-</strong>
-            </div>
-        </div>
-
-        <div class="stat-card warning">
-            <span class="stat-icon">!</span>
-            <div>
-                <h3>Missing Values</h3>
-                <strong id="missing">-</strong>
-            </div>
-        </div>
-
-        <div class="stat-card purple-card">
-            <span class="stat-icon">⧉</span>
-            <div>
-                <h3>Duplicate Rows</h3>
-                <strong id="duplicates">-</strong>
-            </div>
-        </div>
+        <div class="stat-card"><span class="stat-icon">▤</span><div><h3>Total Rows</h3><strong id="rows">-</strong></div></div>
+        <div class="stat-card"><span class="stat-icon">▦</span><div><h3>Total Columns</h3><strong id="columns">-</strong></div></div>
+        <div class="stat-card warning"><span class="stat-icon">!</span><div><h3>Missing Values</h3><strong id="missing">-</strong></div></div>
+        <div class="stat-card purple-card"><span class="stat-icon">⧉</span><div><h3>Duplicate Rows</h3><strong id="duplicates">-</strong></div></div>
     </div>
 
     <div class="data-table-container">
-        <div class="card-header">
-            <div>
-                <h3>Column Information</h3>
-                <p>A detailed overview of every column in your dataset.</p>
-            </div>
-        </div>
-
-        <div class="table-scroll">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Column</th>
-                        <th>Data Type</th>
-                        <th>Missing</th>
-                        <th>Unique Values</th>
-                    </tr>
-                </thead>
-                <tbody id="columnTable"></tbody>
-            </table>
-        </div>
+        <div class="card-header"><div><h3>Column Information</h3><p>A detailed overview of every column in your dataset.</p></div></div>
+        <div class="table-scroll"><table><thead><tr><th>Column</th><th>Data Type</th><th>Missing</th><th>Unique Values</th></tr></thead><tbody id="columnTable"></tbody></table></div>
     </div>
 
     <div class="next-step">
-        <div>
-            <span class="eyebrow">NEXT STEP</span>
-            <h3>Build your business dashboard</h3>
-            <p>Map your dataset columns to sales, profit, products, dates, and regions.</p>
-        </div>
+        <div><span class="eyebrow">NEXT STEP</span><h3>Build your business dashboard</h3><p>Map your dataset columns to sales, profit, products, dates, and regions.</p></div>
         <button class="primary-btn" onclick="showPage('dashboard')">Open Dashboard →</button>
     </div>
 </section>
 
-
 <section id="dashboard" class="page">
     <div class="page-heading">
-        <div>
-            <span class="eyebrow">BUSINESS INTELLIGENCE</span>
-            <h2>Your analytics dashboard</h2>
-            <p>Select the correct dataset columns, then generate interactive insights.</p>
-        </div>
+        <div><span class="eyebrow">BUSINESS INTELLIGENCE</span><h2>Your analytics dashboard</h2><p>Select the correct dataset columns, then generate interactive insights.</p></div>
     </div>
 
     <div class="column-selection">
-        <div class="card-header">
-            <div>
-                <h3>Connect your dataset</h3>
-                <p>Tell DataSense which columns represent your business metrics.</p>
-            </div>
-            <span class="step-badge">Step 1</span>
-        </div>
-
+        <div class="card-header"><div><h3>Connect your dataset</h3><p>Tell DataSense which columns represent your business metrics.</p></div><span class="step-badge">Step 1</span></div>
         <div class="select-grid">
-            <div class="select-group">
-                <label>Sales</label>
-                <select id="salesColumn"></select>
-            </div>
-
-            <div class="select-group">
-                <label>Profit</label>
-                <select id="profitColumn"></select>
-            </div>
-
-            <div class="select-group">
-                <label>Quantity</label>
-                <select id="quantityColumn"></select>
-            </div>
-
-            <div class="select-group">
-                <label>Product</label>
-                <select id="productColumn"></select>
-            </div>
-
-            <div class="select-group">
-                <label>Category</label>
-                <select id="categoryColumn"></select>
-            </div>
-
-            <div class="select-group">
-                <label>Date</label>
-                <select id="dateColumn"></select>
-            </div>
-
-            <div class="select-group">
-                <label>Region</label>
-                <select id="regionColumn"></select>
-            </div>
+            <div class="select-group"><label>Sales</label><select id="salesColumn"></select></div>
+            <div class="select-group"><label>Profit</label><select id="profitColumn"></select></div>
+            <div class="select-group"><label>Quantity</label><select id="quantityColumn"></select></div>
+            <div class="select-group"><label>Product</label><select id="productColumn"></select></div>
+            <div class="select-group"><label>Category</label><select id="categoryColumn"></select></div>
+            <div class="select-group"><label>Date</label><select id="dateColumn"></select></div>
+            <div class="select-group"><label>Region</label><select id="regionColumn"></select></div>
         </div>
-
-        <button onclick="analyzeStore()" class="primary-btn">
-            Generate Dashboard <span>→</span>
-        </button>
+        <button onclick="analyzeStore()" class="primary-btn">Generate Dashboard <span>→</span></button>
     </div>
 
     <div class="dashboard-content" id="dashboardContent">
-        <div class="dashboard-section-title">
-            <span class="eyebrow">PERFORMANCE</span>
-            <h3>Key metrics</h3>
-        </div>
-
+        <div class="dashboard-section-title"><span class="eyebrow">PERFORMANCE</span><h3>Key metrics</h3></div>
         <div class="cards">
-            <div class="stat-card accent-sales">
-                <span class="stat-icon">₿</span>
-                <div>
-                    <h3>Total Sales</h3>
-                    <strong id="totalSales">-</strong>
-                </div>
-            </div>
-
-            <div class="stat-card accent-profit">
-                <span class="stat-icon">↗</span>
-                <div>
-                    <h3>Total Profit</h3>
-                    <strong id="totalProfit">-</strong>
-                </div>
-            </div>
-
-            <div class="stat-card accent-quantity">
-                <span class="stat-icon">□</span>
-                <div>
-                    <h3>Quantity Sold</h3>
-                    <strong id="totalQuantity">-</strong>
-                </div>
-            </div>
-
-            <div class="stat-card accent-orders">
-                <span class="stat-icon">◫</span>
-                <div>
-                    <h3>Total Orders</h3>
-                    <strong id="totalOrders">-</strong>
-                </div>
-            </div>
+            <div class="stat-card accent-sales"><span class="stat-icon">₿</span><div><h3>Total Sales</h3><strong id="totalSales">-</strong></div></div>
+            <div class="stat-card accent-profit"><span class="stat-icon">↗</span><div><h3>Total Profit</h3><strong id="totalProfit">-</strong></div></div>
+            <div class="stat-card accent-quantity"><span class="stat-icon">□</span><div><h3>Quantity Sold</h3><strong id="totalQuantity">-</strong></div></div>
+            <div class="stat-card accent-orders"><span class="stat-icon">◫</span><div><h3>Total Orders</h3><strong id="totalOrders">-</strong></div></div>
         </div>
 
-        <div class="dashboard-section-title">
-            <span class="eyebrow">SMART INSIGHTS</span>
-            <h3>What stands out?</h3>
-        </div>
-
+        <div class="dashboard-section-title"><span class="eyebrow">SMART INSIGHTS</span><h3>What stands out?</h3></div>
         <div class="insights">
-            <div class="insight-card">
-                <span class="insight-label">Best Selling Product</span>
-                <p id="bestProduct">-</p>
-            </div>
-
-            <div class="insight-card">
-                <span class="insight-label">Most Profitable Product</span>
-                <p id="profitableProduct">-</p>
-            </div>
-
-            <div class="insight-card">
-                <span class="insight-label">Most Profitable Day</span>
-                <p id="profitableDay">-</p>
-            </div>
-
-            <div class="insight-card">
-                <span class="insight-label">Best Category</span>
-                <p id="bestCategory">-</p>
-            </div>
+            <div class="insight-card"><span class="insight-label">Best Selling Product</span><p id="bestProduct">-</p></div>
+            <div class="insight-card"><span class="insight-label">Most Profitable Product</span><p id="profitableProduct">-</p></div>
+            <div class="insight-card"><span class="insight-label">Most Profitable Day</span><p id="profitableDay">-</p></div>
+            <div class="insight-card"><span class="insight-label">Best Category</span><p id="bestCategory">-</p></div>
         </div>
 
-        <div class="dashboard-section-title">
-            <span class="eyebrow">VISUAL ANALYTICS</span>
-            <h3>Explore your data</h3>
-        </div>
-
+        <div class="dashboard-section-title"><span class="eyebrow">VISUAL ANALYTICS</span><h3>Explore your data</h3></div>
         <div class="report-download-row">
-        <div>
-            <h3>Take your analysis with you</h3>
-            <p>Download a PDF report with dataset quality, KPIs, product summaries, charts, and insights.</p>
+            <div><h3>Take your analysis with you</h3><p>Download a PDF report with dataset quality, KPIs, product summaries, charts, and insights.</p></div>
+            <button id="downloadReportBtn" onclick="downloadPdfReport()" class="primary-btn"><span>Download PDF Report ↓</span></button>
         </div>
-        <button id="downloadReportBtn" onclick="downloadPdfReport()" class="primary-btn">
-            <span>Download PDF Report ↓</span>
-        </button>
-    </div>
 
-    <div class="chart-grid">
-            <div class="chart-card large">
-                <div id="salesChart" class="plotly-chart"></div>
-            </div>
-
-            <div class="chart-card">
-                <div id="productsChart" class="plotly-chart"></div>
-            </div>
-
-            <div class="chart-card">
-                <div id="profitChart" class="plotly-chart"></div>
-            </div>
-
-            <div class="chart-card">
-                <div id="categoryChart" class="plotly-chart"></div>
-            </div>
-
-            <div class="chart-card">
-                <div id="regionChart" class="plotly-chart"></div>
-            </div>
+        <div class="chart-grid">
+            <div class="chart-card large"><div id="salesChart" class="plotly-chart"></div></div>
+            <div class="chart-card"><div id="productsChart" class="plotly-chart"></div></div>
+            <div class="chart-card"><div id="profitChart" class="plotly-chart"></div></div>
+            <div class="chart-card"><div id="categoryChart" class="plotly-chart"></div></div>
+            <div class="chart-card"><div id="regionChart" class="plotly-chart"></div></div>
         </div>
     </div>
 </section>
 
 <script src="https://cdn.plot.ly/plotly-3.1.0.min.js"></script>
 <script src="{{ url_for('static', filename='js/app.js') }}"></script>
-
+<script src="{{ url_for('static', filename='js/home-reference.js') }}"></script>
 </body>
 </html>
