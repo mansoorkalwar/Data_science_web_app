@@ -39,6 +39,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const style = document.createElement("style");
     style.textContent = `
+        @font-face { font-family: "Inter Local"; src: url("https://raw.githubusercontent.com/mansoorkalwar/Data_science_web_app/main/fonts/static/Inter_18pt-Regular.ttf") format("truetype"); font-weight:400; font-style:normal; font-display:swap; }
+        @font-face { font-family: "Inter Local"; src: url("https://raw.githubusercontent.com/mansoorkalwar/Data_science_web_app/main/fonts/static/Inter_18pt-Medium.ttf") format("truetype"); font-weight:500; font-style:normal; font-display:swap; }
+        @font-face { font-family: "Inter Local"; src: url("https://raw.githubusercontent.com/mansoorkalwar/Data_science_web_app/main/fonts/static/Inter_18pt-SemiBold.ttf") format("truetype"); font-weight:600; font-style:normal; font-display:swap; }
+        @font-face { font-family: "Inter Local"; src: url("https://raw.githubusercontent.com/mansoorkalwar/Data_science_web_app/main/fonts/static/Inter_18pt-Bold.ttf") format("truetype"); font-weight:700; font-style:normal; font-display:swap; }
         .home-reference-page .hero-stats { display:flex; justify-content:flex-start; align-items:stretch; margin-top:34px; }
         .home-reference-page .reference-capability { display:flex; align-items:center; gap:10px; padding:0 23px; border-right:1px solid #D7DEDB; }
         .home-reference-page .reference-capability:first-child { padding-left:0; }
